@@ -22,8 +22,9 @@ public class Player : MonoBehaviour
     {
         direction = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-            Shoot();
+        Flip();
+
+        Shoot();
     }
 
     private void FixedUpdate()
@@ -35,6 +36,25 @@ public class Player : MonoBehaviour
     private void Shoot()
     {
         if (weapon != null)
-            weapon.GetComponent<Gun>().Fire(direction);
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+                weapon.GetComponent<Gun>().StartFire();
+            else if (Input.GetKeyUp(KeyCode.Mouse0))
+                weapon.GetComponent<Gun>().EndFire();
+        }
+    }
+
+    private void Flip()
+    {
+        if (direction != 0 && direction != transform.localScale.x)
+        {
+            Vector3 newScale = transform.localScale;
+            newScale.x *= -1;
+            transform.localScale = newScale;
+
+            direction *= -1;
+
+            weapon.GetComponent<Gun>().FlipGun();
+        }
     }
 }
