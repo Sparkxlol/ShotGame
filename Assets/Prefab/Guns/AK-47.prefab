@@ -129,6 +129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20703e0d99e3e0849b04aa26b744ca13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 2991768408319193716, guid: d3db1aa321979c149afccf579941b4e5, type: 3}
+  projTrail: {fileID: 7041914022537799820, guid: b8a229eaadfea4a48a6e4228563a1795, type: 3}
   projOrigin: {fileID: 5737338563088650730}
   projSpeed: 25
+  projDis: 50
+  projDamage: 5
+  automatic: 1

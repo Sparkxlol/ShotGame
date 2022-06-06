@@ -21,6 +21,5 @@ public class EnemyController : MonoBehaviour
     public void TakeDamage(float amount)
     {
         healthPoint -= amount;
-        Debug.Log(healthPoint);
-    }
+    } 
 }
