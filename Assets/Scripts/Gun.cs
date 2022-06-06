@@ -27,30 +27,31 @@ public class Gun : Weapon
         if (firing && fireWait >= maxFireWait)
         {
             // muzzleAnim.SetTrigger("Shoot");
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             var hit = Physics2D.Raycast(
                 projOrigin.position,
-                transform.right,
+                mousePos - projOrigin.position,
                 projDis);
+
+            Debug.DrawRay(projOrigin.position, mousePos - projOrigin.position, Color.green, 20f);
 
             var trail = Instantiate(
                 projTrail,
                 projOrigin.position,
-                transform.rotation);
-
-            // Debug.DrawRay(projOrigin.position, transform.right * projDis, Color.green, 50f);
+                Quaternion.identity);
 
             var trailScript = trail.GetComponent<TrailEffect>();
 
             if (hit.collider != null)
             {
                 trailScript.SetTargetPosition(hit.point);
-                if (hit.collider.transform.parent.CompareTag("Enemy"))
+                if (hit.collider.transform.parent != null && hit.collider.transform.parent.CompareTag("Enemy"))
                     hit.collider.GetComponent<EnemyDamage>().Hit(projDamage);
             }
             else
             {
-                var endPos = projOrigin.position + transform.right * projDis;
+                var endPos = projOrigin.position + mousePos * projDis;
                 trailScript.SetTargetPosition(endPos);
             }
 
