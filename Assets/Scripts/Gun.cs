@@ -7,7 +7,7 @@ public class Gun : Weapon
     [SerializeField] protected GameObject projTrail;
     [SerializeField] protected Transform projOrigin;
     [SerializeField] protected float projSpeed = 25f;
-    [SerializeField] protected float projDis = 50f;
+    [SerializeField] protected float projDis = 20f;
     [SerializeField] protected float projDamage = 5f;
     //[SerializeField] protected Animator muzzleAnim;
 
@@ -17,9 +17,28 @@ public class Gun : Weapon
     [SerializeField] protected const float maxFireWait = .1f;
     protected float fireWait;
 
+    [SerializeField] protected int maxBullets = 20;
+
+    protected float firePause = 0; // Lower amount inbetween shots higher spread
+    [SerializeField] protected float maxFirePause = Mathf.Infinity;
+    protected int shotsSincePause; // Higher amount has more spread;
+    [SerializeField] protected float maxShotsSincePause = Mathf.Infinity;
+    [SerializeField] protected float fireSpreadPercent;
+
+    private void Start()
+    {
+        if (maxShotsSincePause == Mathf.Infinity)
+            maxShotsSincePause = maxBullets;
+
+        if (maxFirePause == Mathf.Infinity)
+            maxFirePause = maxFireWait * 5;
+    }
+
     private void Update()
     {
         Fire();
+
+        firePause += Time.deltaTime;
     }
 
     private void Fire()
@@ -28,13 +47,16 @@ public class Gun : Weapon
         {
             // muzzleAnim.SetTrigger("Shoot");
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 sprayChange = FindSpread();
+            Vector3 dirChange = mousePos - projOrigin.position;
+            dirChange = new Vector3(dirChange.x + sprayChange.x / dirChange.x, dirChange.y + sprayChange.y / dirChange.y, dirChange.z);
 
             var hit = Physics2D.Raycast(
                 projOrigin.position,
-                mousePos - projOrigin.position,
+                dirChange,
                 projDis);
 
-            Debug.DrawRay(projOrigin.position, mousePos - projOrigin.position, Color.green, 20f);
+            Debug.DrawRay(projOrigin.position, dirChange, Color.green, 20f);
 
             var trail = Instantiate(
                 projTrail,
@@ -51,7 +73,7 @@ public class Gun : Weapon
             }
             else
             {
-                var endPos = projOrigin.position + mousePos * projDis;
+                var endPos = (dirChange) * projDis;
                 trailScript.SetTargetPosition(endPos);
             }
 
@@ -75,5 +97,24 @@ public class Gun : Weapon
     public void FlipGun()
     {
         curDirection *= -1;
+    }
+
+    private Vector3 FindSpread()
+    {
+        if (firePause >= maxFirePause)
+            shotsSincePause = 0;
+        else
+            shotsSincePause++;
+
+        float maxDifference = 0;
+        float firePauseDiff = firePause / maxFirePause;
+        float shotPauseDiff = shotsSincePause / maxShotsSincePause;
+
+        maxDifference += (firePauseDiff >= 1) ? 0 : 1 - firePauseDiff;
+        maxDifference += (shotPauseDiff * 5) * fireSpreadPercent;
+
+        firePause = 0;
+
+        return new Vector3(Random.Range(-maxDifference, maxDifference), Random.Range(-maxDifference, maxDifference), 0);
     }
 }
