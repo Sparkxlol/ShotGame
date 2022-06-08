@@ -23,7 +23,7 @@ public class Gun : Weapon
     [SerializeField] protected float maxFirePause = Mathf.Infinity;
     protected int shotsSincePause; // Higher amount has more spread;
     [SerializeField] protected float maxShotsSincePause = Mathf.Infinity;
-    [SerializeField] protected float fireSpreadPercent;
+    [SerializeField] protected float fireSpreadPercent = 0;
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class Gun : Weapon
             maxShotsSincePause = maxBullets;
 
         if (maxFirePause == Mathf.Infinity)
-            maxFirePause = maxFireWait * 5;
+            maxFirePause = maxFireWait * 2.5f;
     }
 
     private void Update()
@@ -46,17 +46,19 @@ public class Gun : Weapon
         if (firing && fireWait >= maxFireWait)
         {
             // muzzleAnim.SetTrigger("Shoot");
+
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 sprayChange = FindSpread();
             Vector3 dirChange = mousePos - projOrigin.position;
-            dirChange = new Vector3(dirChange.x + sprayChange.x / dirChange.x, dirChange.y + sprayChange.y / dirChange.y, dirChange.z);
+
+            dirChange = new Vector3(dirChange.x + sprayChange.x * dirChange.y, dirChange.y + sprayChange.y * dirChange.x, dirChange.z);
 
             var hit = Physics2D.Raycast(
                 projOrigin.position,
                 dirChange,
                 projDis);
 
-            Debug.DrawRay(projOrigin.position, dirChange, Color.green, 20f);
+            // Debug.DrawRay(projOrigin.position, dirChange, Color.green, 20f);
 
             var trail = Instantiate(
                 projTrail,
@@ -73,7 +75,7 @@ public class Gun : Weapon
             }
             else
             {
-                var endPos = (dirChange) * projDis;
+                var endPos = dirChange * projDis;
                 trailScript.SetTargetPosition(endPos);
             }
 
@@ -110,8 +112,9 @@ public class Gun : Weapon
         float firePauseDiff = firePause / maxFirePause;
         float shotPauseDiff = shotsSincePause / maxShotsSincePause;
 
-        maxDifference += (firePauseDiff >= 1) ? 0 : 1 - firePauseDiff;
-        maxDifference += (shotPauseDiff * 5) * fireSpreadPercent;
+        maxDifference += (firePauseDiff >= 1) ? 0 : (1 - firePauseDiff) * .5f;
+        maxDifference += (shotPauseDiff >= 1) ? 1 : shotPauseDiff;
+        maxDifference *= fireSpreadPercent;
 
         firePause = 0;
 
