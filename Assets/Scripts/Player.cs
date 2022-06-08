@@ -41,6 +41,8 @@ public class Player : MonoBehaviour
                 weapon.GetComponent<Gun>().StartFire();
             else if (Input.GetKeyUp(KeyCode.Mouse0))
                 weapon.GetComponent<Gun>().EndFire();
+            else if (Input.GetKeyDown(KeyCode.R))
+                weapon.GetComponent<Gun>().Reload();
         }
     }
 

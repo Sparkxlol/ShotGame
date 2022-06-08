@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Gun : Weapon
 {
+    [Header("General")]
     [SerializeField] protected GameObject projTrail;
     [SerializeField] protected Transform projOrigin;
     [SerializeField] protected float projSpeed = 25f;
@@ -11,19 +12,27 @@ public class Gun : Weapon
     [SerializeField] protected float projDamage = 5f;
     //[SerializeField] protected Animator muzzleAnim;
 
+    [Header("Firing")]
+    [SerializeField] protected bool automatic = true;
+    [SerializeField] protected float maxFireWait = .1f;
     protected bool firing = false;
     protected float curDirection = 1f;
-    [SerializeField] protected bool automatic = true;
-    [SerializeField] protected const float maxFireWait = .1f;
     protected float fireWait;
 
+    [Header("Reload")]
     [SerializeField] protected int maxBullets = 20;
+    [SerializeField] protected float maxReloadTime = 1f;
+    protected bool reloading = false;
+    protected int currentBullets;
+    protected float reloadTime = 0;
 
+    [Header("Spread")]
+    [SerializeField] protected float fireSpreadPercent = 0;
     protected float firePause = 0; // Lower amount inbetween shots higher spread
     [SerializeField] protected float maxFirePause = Mathf.Infinity;
     protected int shotsSincePause; // Higher amount has more spread;
     [SerializeField] protected float maxShotsSincePause = Mathf.Infinity;
-    [SerializeField] protected float fireSpreadPercent = 0;
+
 
     private void Start()
     {
@@ -32,18 +41,25 @@ public class Gun : Weapon
 
         if (maxFirePause == Mathf.Infinity)
             maxFirePause = maxFireWait * 2.5f;
+
+        currentBullets = maxBullets;
     }
 
     private void Update()
     {
         Fire();
 
+        reloadTime += Time.deltaTime;
         firePause += Time.deltaTime;
+
+        // Checks for reloading.
+        if (reloading && reloadTime >= maxReloadTime)
+            reloading = false;
     }
 
     private void Fire()
     {
-        if (firing && fireWait >= maxFireWait)
+        if (firing && fireWait >= maxFireWait && !reloading && currentBullets > 0)
         {
             // muzzleAnim.SetTrigger("Shoot");
 
@@ -79,6 +95,7 @@ public class Gun : Weapon
                 trailScript.SetTargetPosition(endPos);
             }
 
+            currentBullets--;
             fireWait = 0f;
             if (!automatic)
                 EndFire();
@@ -119,5 +136,12 @@ public class Gun : Weapon
         firePause = 0;
 
         return new Vector3(Random.Range(-maxDifference, maxDifference), Random.Range(-maxDifference, maxDifference), 0);
+    }
+
+    public void Reload()
+    {
+        reloading = true;
+        reloadTime = 0;
+        currentBullets = maxBullets;
     }
 }
