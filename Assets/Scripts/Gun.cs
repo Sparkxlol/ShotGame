@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gun : Weapon
 {
     [Header("General")]
+    [SerializeField] protected GameObject hitMarker;
     [SerializeField] protected GameObject projTrail;
     [SerializeField] protected Transform projOrigin;
     [SerializeField] protected float projSpeed = 25f;
@@ -86,6 +87,7 @@ public class Gun : Weapon
             if (hit.collider != null)
             {
                 trailScript.SetTargetPosition(hit.point);
+                Instantiate(hitMarker, hit.point, Quaternion.identity);
                 if (hit.collider.transform.parent != null && hit.collider.transform.parent.CompareTag("Enemy"))
                     hit.collider.GetComponent<EnemyDamage>().Hit(projDamage);
             }

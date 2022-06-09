@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 249010863358748125}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.403, y: 0.158, z: 0}
+  m_LocalPosition: {x: 0.942, y: 0.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6370645188450430994}
   - component: {fileID: 3116062083512005317}
   m_Layer: 0
-  m_Name: Glock-18
+  m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d13869571095d5f41b59714a2b6acbce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b79c9d7a02ae42d468b47ae574ad3725, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -129,14 +129,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20703e0d99e3e0849b04aa26b744ca13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitMarker: {fileID: 2658261920367333909, guid: 14bdc48d28d584643afbfb826335f91c, type: 3}
   projTrail: {fileID: 7041914022537799820, guid: b8a229eaadfea4a48a6e4228563a1795, type: 3}
   projOrigin: {fileID: 5737338563088650730}
   projSpeed: 25
   projDis: 50
-  projDamage: 10
-  automatic: 0
-  maxFireWait: 0.2
-  maxBullets: 5
+  projDamage: 5
+  automatic: 1
+  maxFireWait: 0.1
+  maxBullets: 20
+  maxReloadTime: 1
+  fireSpreadPercent: 0
   maxFirePause: Infinity
   maxShotsSincePause: Infinity
-  fireSpreadPercent: 0
