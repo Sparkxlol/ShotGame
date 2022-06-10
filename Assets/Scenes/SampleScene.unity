@@ -193,7 +193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7753025273076193006, guid: 608e5266f4329e848bda90eac793dc70, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.067
+      value: -0.005
       objectReference: {fileID: 0}
     - target: {fileID: 7753025273076193006, guid: 608e5266f4329e848bda90eac793dc70, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1840,10 +1840,34 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 846283054}
+    - target: {fileID: 5939402334592825155, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
+      propertyPath: rifleSprites.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5939402334592825155, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
+      propertyPath: rifleSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 1812111976, guid: cc6c56be41c13074aa0fe9e4f5c0ec3b, type: 3}
+    - target: {fileID: 5939402334592825155, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
+      propertyPath: rifleSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 1582795924, guid: cc6c56be41c13074aa0fe9e4f5c0ec3b, type: 3}
+    - target: {fileID: 5939402334592825155, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
+      propertyPath: rifleSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 155495290, guid: cc6c56be41c13074aa0fe9e4f5c0ec3b, type: 3}
+    - target: {fileID: 5939402334592825155, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
+      propertyPath: rifleSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: -1473675310, guid: cc6c56be41c13074aa0fe9e4f5c0ec3b, type: 3}
+    - target: {fileID: 5939402334592825155, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
+      propertyPath: rifleSprites.Array.data[4]
+      value: 
+      objectReference: {fileID: 201679456, guid: cc6c56be41c13074aa0fe9e4f5c0ec3b, type: 3}
     - target: {fileID: 5939402334592825158, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c35986d61fe74274cb7a2e928b4e61a0, type: 3}
+      objectReference: {fileID: 155495290, guid: cc6c56be41c13074aa0fe9e4f5c0ec3b, type: 3}
     - target: {fileID: 5939402334592825159, guid: 25ef6b3f161cb244ea79fa48ccfd9bff, type: 3}
       propertyPath: m_RootOrder
       value: 2
